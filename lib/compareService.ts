@@ -21,7 +21,7 @@ function resolveCompany(name: string, corpList: Corp[]): Corp {
 
 export async function compareCompanies(companyNames: string[], baseYear: number): Promise<CompanyData[]> {
   const apiKey = getApiKey();
-  const corpList = await getCorpCodeList(apiKey);
+  const corpList = await getCorpCodeList();
 
   const results: CompanyData[] = [];
   for (const name of companyNames) {

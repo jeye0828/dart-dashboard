@@ -1,10 +1,8 @@
-import JSZip from "jszip";
-import { XMLParser } from "fast-xml-parser";
 import { ACCOUNT_MAP } from "./dartAccounts";
 import type { Period } from "./ratios";
+import corpCodesData from "./data/corpCodes.json";
 
 const API_BASE = "https://opendart.fss.or.kr/api";
-const CORP_CACHE_MAX_AGE_MS = 7 * 24 * 3600 * 1000; // 7일
 
 export class DartApiError extends Error {}
 
@@ -14,8 +12,9 @@ export interface Corp {
   stock_code: string;
 }
 
-// 서버리스 인스턴스가 살아있는 동안(warm) 재사용되는 모듈 레벨 캐시
-let corpCache: { list: Corp[]; fetchedAt: number } | null = null;
+// DART의 corpCode.xml(약 30MB 압축 파일)을 매 요청마다 내려받으면 응답이 매우 느려지므로,
+// scripts/update-corp-codes.mjs로 미리 만들어둔 정적 목록을 번들에 포함해 즉시 사용한다.
+const CORP_CODES: Corp[] = corpCodesData as Corp[];
 
 export function getApiKey(): string {
   const key = process.env.DART_API_KEY;
@@ -25,45 +24,8 @@ export function getApiKey(): string {
   return key;
 }
 
-async function downloadCorpCodeList(apiKey: string): Promise<Corp[]> {
-  const res = await fetch(`${API_BASE}/corpCode.xml?crtfc_key=${apiKey}`);
-  if (!res.ok) {
-    throw new DartApiError(`corpCode.xml 요청 실패 (HTTP ${res.status})`);
-  }
-  const buf = Buffer.from(await res.arrayBuffer());
-  const contentType = res.headers.get("content-type") || "";
-  if (!contentType.includes("zip") && !contentType.includes("msdownload") && !contentType.includes("octet-stream")) {
-    const parser = new XMLParser({ parseTagValue: false });
-    const parsed = parser.parse(buf.toString("utf-8"));
-    const status = parsed?.result?.status;
-    const message = parsed?.result?.message;
-    throw new DartApiError(`DART API 오류 (${status}): ${message}`);
-  }
-
-  const zip = await JSZip.loadAsync(buf);
-  const xmlFile = zip.file("CORPCODE.xml");
-  if (!xmlFile) throw new DartApiError("CORPCODE.xml을 zip에서 찾을 수 없습니다.");
-  const xmlText = await xmlFile.async("text");
-
-  const parser = new XMLParser({ parseTagValue: false });
-  const parsed = parser.parse(xmlText);
-  const items = parsed?.result?.list ?? [];
-  const list: Corp[] = (Array.isArray(items) ? items : [items]).map((item: Record<string, unknown>) => ({
-    corp_code: String(item.corp_code ?? "").trim(),
-    corp_name: String(item.corp_name ?? "").trim(),
-    stock_code: String(item.stock_code ?? "").trim(),
-  }));
-  return list;
-}
-
-export async function getCorpCodeList(apiKey: string): Promise<Corp[]> {
-  const now = Date.now();
-  if (corpCache && now - corpCache.fetchedAt < CORP_CACHE_MAX_AGE_MS) {
-    return corpCache.list;
-  }
-  const list = await downloadCorpCodeList(apiKey);
-  corpCache = { list, fetchedAt: now };
-  return list;
+export async function getCorpCodeList(): Promise<Corp[]> {
+  return CORP_CODES;
 }
 
 export function searchCompany(name: string, corpList: Corp[]): Corp[] {
