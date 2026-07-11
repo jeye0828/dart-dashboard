@@ -15,26 +15,49 @@
 
 ## 기술 스택
 
+<img src="https://skillicons.dev/icons?i=nextjs,react,ts,tailwind,vercel,python" alt="Next.js, React, TypeScript, Tailwind CSS, Vercel, Python" />
+
 **프레임워크 / 언어**
+
+![Next.js](https://img.shields.io/badge/Next.js_16-000000?style=flat-square&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React_19-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
+
 - [Next.js 16](https://nextjs.org) (App Router, Turbopack) + React 19 + TypeScript
 - 배포 대상: [Vercel](https://vercel.com)
 
 **스타일링**
+
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+
 - Tailwind CSS v4 (CSS 기반 `@theme` 토큰으로 브랜드 컬러 정의)
 - 커스텀 디자인 시스템: 카드형 레이아웃, 라운드 처리, 시스템 폰트 스택 기반의 깔끔한 UI
 
 **데이터 시각화**
+
+![Recharts](https://img.shields.io/badge/Recharts-8884d8?style=flat-square)
+
 - [Recharts](https://recharts.org) — 매출액 추이 라인차트, 재무비율 바차트
 
 **엑셀 생성**
+
+![ExcelJS](https://img.shields.io/badge/ExcelJS-217346?style=flat-square)
+
 - [ExcelJS](https://github.com/exceljs/exceljs) — 서버(API 라우트)에서 `.xlsx` 파일을 즉석 생성
 
 **외부 데이터**
+
+![DART Open API](https://img.shields.io/badge/DART_오픈API-003A70?style=flat-square)
+
 - [DART 오픈API](https://opendart.fss.or.kr) (금융감독원 전자공시시스템) — 회사 코드 조회, 단일회사 전체 재무제표(연결 우선, 없으면 개별)
 - 회사 코드 목록(약 11만 건)은 매 요청마다 DART에서 내려받지 않고, `lib/data/corpCodes.json`에 미리 정제해 번들 — 검색 응답을 즉시(수 ms) 처리하기 위함
 - 계정과목명은 회사마다 표기가 달라(예: "매출액" vs "영업수익", 공백 유무) 후보 목록 + 정규화로 흡수 (`lib/dartAccounts.ts`)
 
 **CLI 버전 (파이썬)**
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+
 - `requests`, `openpyxl`
 
 ## 아키텍처 개요
