@@ -30,6 +30,22 @@ function safeDiv(numerator: number | null, denominator: number | null): number |
   return numerator / denominator;
 }
 
+export const RAW_FIELDS: [string, Exclude<keyof Period, "period">][] = [
+  ["매출액", "revenue"],
+  ["매출원가", "cogs"],
+  ["영업이익", "operating_income"],
+  ["당기순이익", "net_income"],
+  ["이자비용/금융비용", "interest_expense"],
+  ["자산총계", "total_assets"],
+  ["유동자산", "current_assets"],
+  ["재고자산", "inventory"],
+  ["현금및현금성자산", "cash"],
+  ["부채총계", "total_liabilities"],
+  ["유동부채", "current_liabilities"],
+  ["자본총계", "total_equity"],
+  ["영업활동현금흐름", "operating_cash_flow"],
+];
+
 export const RATIO_LABELS = [
   "매출총이익률(%)", "영업이익률(%)", "순이익률(%)", "ROA(%)", "ROE(%)",
   "유동비율(%)", "당좌비율(%)", "현금비율(%)", "부채비율(%)", "부채자산비율(%)",

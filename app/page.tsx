@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { RATIO_LABELS, GROWTH_LABELS } from "@/lib/ratios";
+import { RATIO_LABELS, GROWTH_LABELS, type Period } from "@/lib/ratios";
 import ComparisonCharts from "@/app/components/ComparisonCharts";
+import CompanyStatement from "@/app/components/CompanyStatement";
 
 interface Corp {
   corp_code: string;
@@ -14,7 +15,7 @@ interface CompanyData {
   inputName: string;
   corpName: string;
   fsDiv: string | null;
-  periods: { period: string; revenue: number | null }[];
+  periods: Period[];
   ratioRows: Record<string, string | number | null>[];
   growthRows: Record<string, string | number | null>[];
 }
@@ -283,10 +284,22 @@ export default function Home() {
 
         {result && (
           <div className="space-y-5">
-            <ComparisonCharts companies={result} />
+            <div>
+              <h2 className="text-xl font-extrabold text-foreground mb-4 px-1">회사별 재무제표</h2>
+              <div className="space-y-5">
+                {result.map((cd) => (
+                  <CompanyStatement key={cd.corpName} company={cd} />
+                ))}
+              </div>
+            </div>
 
-            <section className="bg-surface rounded-2xl shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.03)] p-5 sm:p-6 overflow-hidden">
-              <h2 className="text-lg font-extrabold text-foreground mb-4">재무비율 비교</h2>
+            <div className="pt-2">
+              <h2 className="text-xl font-extrabold text-foreground mb-4 px-1">종합 비교</h2>
+              <div className="space-y-5">
+                <ComparisonCharts companies={result} />
+
+                <section className="bg-surface rounded-2xl shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.03)] p-5 sm:p-6 overflow-hidden">
+                  <h3 className="text-lg font-extrabold text-foreground mb-4">재무비율 비교</h3>
               <div className="overflow-x-auto -mx-5 sm:-mx-6 px-5 sm:px-6">
                 <table className="min-w-full text-sm border-separate border-spacing-0">
                   <thead>
@@ -332,8 +345,8 @@ export default function Home() {
               </div>
             </section>
 
-            <section className="bg-surface rounded-2xl shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.03)] p-5 sm:p-6 overflow-hidden">
-              <h2 className="text-lg font-extrabold text-foreground mb-4">성장성 비교 (YoY, %)</h2>
+                <section className="bg-surface rounded-2xl shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.03)] p-5 sm:p-6 overflow-hidden">
+                  <h3 className="text-lg font-extrabold text-foreground mb-4">성장성 비교 (YoY, %)</h3>
               <div className="overflow-x-auto -mx-5 sm:-mx-6 px-5 sm:px-6">
                 <table className="min-w-full text-sm border-separate border-spacing-0">
                   <thead>
@@ -377,7 +390,9 @@ export default function Home() {
                   </tbody>
                 </table>
               </div>
-            </section>
+                </section>
+              </div>
+            </div>
           </div>
         )}
       </div>

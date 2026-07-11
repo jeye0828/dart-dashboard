@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import ExcelJS from "exceljs";
 import { compareCompanies, type CompanyData } from "@/lib/compareService";
 import { DartApiError } from "@/lib/dartClient";
-import { RATIO_LABELS, GROWTH_LABELS } from "@/lib/ratios";
+import { RATIO_LABELS, GROWTH_LABELS, RAW_FIELDS } from "@/lib/ratios";
 
 const HEADER_FILL: ExcelJS.Fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFDDEBF7" } };
 const COMPANY_FILL: ExcelJS.Fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FF203864" } };
@@ -98,22 +98,6 @@ function buildComparisonSheet(wb: ExcelJS.Workbook, companiesData: CompanyData[]
   ws.views = [{ state: "frozen", xSplit: 1, ySplit: 2 }];
   autofit(ws);
 }
-
-const RAW_FIELDS: [string, keyof CompanyData["periods"][number]][] = [
-  ["매출액", "revenue"],
-  ["매출원가", "cogs"],
-  ["영업이익", "operating_income"],
-  ["당기순이익", "net_income"],
-  ["이자비용/금융비용", "interest_expense"],
-  ["자산총계", "total_assets"],
-  ["유동자산", "current_assets"],
-  ["재고자산", "inventory"],
-  ["현금및현금성자산", "cash"],
-  ["부채총계", "total_liabilities"],
-  ["유동부채", "current_liabilities"],
-  ["자본총계", "total_equity"],
-  ["영업활동현금흐름", "operating_cash_flow"],
-];
 
 function buildCompanySheet(wb: ExcelJS.Workbook, cd: CompanyData, usedNames: Set<string>) {
   let title = (cd.corpName || cd.inputName).slice(0, 28);
