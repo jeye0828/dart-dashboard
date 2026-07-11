@@ -5,3 +5,15 @@ __pycache__/
 ~$*.xlsx
 comparison.xlsx
 report.csv
+
+# Node / Next.js
+/node_modules
+/.next/
+/out/
+/build
+.env*
+!.env*.example
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
