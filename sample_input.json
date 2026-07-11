@@ -1,0 +1,53 @@
+{
+  "company": "샘플전자 주식회사",
+  "periods": [
+    {
+      "period": "2022",
+      "revenue": 1000000,
+      "cogs": 650000,
+      "operating_income": 120000,
+      "net_income": 90000,
+      "interest_expense": 15000,
+      "total_assets": 1500000,
+      "current_assets": 600000,
+      "inventory": 150000,
+      "cash": 200000,
+      "total_liabilities": 700000,
+      "current_liabilities": 300000,
+      "total_equity": 800000,
+      "operating_cash_flow": 110000
+    },
+    {
+      "period": "2023",
+      "revenue": 1150000,
+      "cogs": 720000,
+      "operating_income": 150000,
+      "net_income": 110000,
+      "interest_expense": 16000,
+      "total_assets": 1650000,
+      "current_assets": 680000,
+      "inventory": 170000,
+      "cash": 230000,
+      "total_liabilities": 730000,
+      "current_liabilities": 320000,
+      "total_equity": 920000,
+      "operating_cash_flow": 135000
+    },
+    {
+      "period": "2024",
+      "revenue": 1300000,
+      "cogs": 800000,
+      "operating_income": 180000,
+      "net_income": 140000,
+      "interest_expense": 17000,
+      "total_assets": 1800000,
+      "current_assets": 750000,
+      "inventory": 190000,
+      "cash": 260000,
+      "total_liabilities": 750000,
+      "current_liabilities": 340000,
+      "total_equity": 1050000,
+      "operating_cash_flow": 160000
+    }
+  ]
+}
