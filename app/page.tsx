@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { RATIO_LABELS, GROWTH_LABELS } from "@/lib/ratios";
+import ComparisonCharts from "@/app/components/ComparisonCharts";
 
 interface Corp {
   corp_code: string;
@@ -13,7 +14,7 @@ interface CompanyData {
   inputName: string;
   corpName: string;
   fsDiv: string | null;
-  periods: { period: string }[];
+  periods: { period: string; revenue: number | null }[];
   ratioRows: Record<string, string | number | null>[];
   growthRows: Record<string, string | number | null>[];
 }
@@ -282,6 +283,8 @@ export default function Home() {
 
         {result && (
           <div className="space-y-5">
+            <ComparisonCharts companies={result} />
+
             <section className="bg-surface rounded-2xl shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.03)] p-5 sm:p-6 overflow-hidden">
               <h2 className="text-lg font-extrabold text-foreground mb-4">재무비율 비교</h2>
               <div className="overflow-x-auto -mx-5 sm:-mx-6 px-5 sm:px-6">
